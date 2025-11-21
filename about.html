@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Your Name</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="glass-nav container">
+      <a class="logo" href="index.html">Sanya Chetwani</a>
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <!-- <li><a href="contact.html">Contact</a></li> -->
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h1>About</h1>
+      <p>
+        Short bio: what you do, where you work/study, and a one-liner about your philosophy.
+      </p>
+
+      <h2>Skills</h2>
+      <ul class="simple-list">
+        <li>Python, PyTorch, NLP</li>
+        <li>ML pipelines, Docker, AWS</li>
+        <li>HTML, CSS (design focused)</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© <span id="year2"></span> Your Name</p>
+  </footer>
+
+  <script>document.getElementById('year2').textContent = new Date().getFullYear();</script>
+</body>
+</html>

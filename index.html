@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sanya Chetwani</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="glass-nav container">
+      <a class="logo" href="index.html">Machine Learning Engineer</a>
+      <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <!-- <li><a href="contact.html">Contact</a></li> -->
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container main-content">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="portrait-wrap-profile">
+        <!-- using the uploaded file path as requested -->
+        <img class="portrait" src="/images/IMG_3910 (1).png" alt="Sanya" />
+      </div>
+
+      <h1 class="name">Sanya Chetwani</h1>
+      <p class="subtitle">Data scientist · ML Engineer · Designer of clean systems</p>
+    </section>
+
+    <!-- Intro / continuous scroll content -->
+    <section class="intro">
+      <h2>Hi there!</h2>
+      <p>
+        I am a Data Scientist with expertise in NLP and scalable ML systems, driving impactful solutions for data-intensive environments. I am proficient in Python, PyTorch, Big Data pipelines, and automated cloud workflows. MS in Data Science from UC San Diego.
+      </p>
+    </section>
+
+    <section class="spotlight">
+      <h3>Featured</h3>
+      <article class="card">
+        <h4>Project Title</h4>
+        <p>Short description — what it is and why it matters.</p>
+        <a class="cta" href="experience.html">See details →</a>
+      </article>
+    </section>
+
+    <section class="page">
+      <h1>About</h1>
+      <p>
+        Short bio: what you do, where you work/study, and a one-liner about your philosophy.
+      </p>
+
+      <h2>Skills</h2>
+      <ul class="simple-list">
+        <li>Python, PyTorch, NLP</li>
+        <li>ML pipelines, Docker, AWS</li>
+        <li>HTML, CSS (design focused)</li>
+      </ul>
+    </section>
+
+    <section class="page">
+      <h1>Contact</h1>
+      <p>If you'd like to get in touch:
+      <ul class="simple-list">
+        <li>Email me at <a href="mailto:schetwani1@gmail.com">schetwani1@gmail.com</a></li>
+        <li>Connect with me on <a href="https://www.linkedin.com/in/sanyachetwani">LinkedIn/SanyaChetwani</a></li>
+        <li>Follow me on <a href="https://www.github.com/SanyaCodes">GitHub/SanyaCodes</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="container footer">
+    <p>© <span id="year"></span> Your Name — Minimal portfolio</p>
+  </footer>
+
+  <script>
+    // simple script for year & mobile nav fallback (tiny, unobtrusive)
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Experience — Your Name</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="glass-nav container">
+      <a class="logo" href="index.html">Sanya Chetwani</a>
+      <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="experience.html" aria-current="page">Experience</a></li>
+        <!-- <li><a href="contact.html">Contact</a></li> -->
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h1>Experience</h1>
+      <div class="timeline">
+        <div class="role">
+          <h3>Data Scientist — Kognitic</h3>
+          <p>June 2024 – Present</p>
+          <p>Built production ML models (Transformer for biomarker extraction with 0.87 F1, LSTM for timeline forecasting with 70% error reduction) and automated inference pipelines using Airflow, AWS Lambda, and S3 - processing 5K+ trials monthly and cutting manual work by 90%. Developed ETL pipelines with AWS Glue (Spark), S3, and Athena to process 100K+ clinical abstracts, designed database schemas, and enabled real-time analytics. Led end-to-end development of a $1M AI SaaS platform, collaborating across product and UI teams to translate client feedback into iterative improvements. Fine-tuned LLMs using LoRA and RLHF for clinical text classification. Published research at EMNLP 2025.</p>
+
+          <h3>Teaching Assistant — UC San Diego</h3>
+          <p>Sept 2023 – Jan 2024</p>
+          <p>Taught SQL, NoSQL, MongoDB, and Neo4j to 120+ graduate students, creating real-world case studies on schema design, query optimization, and app integration to build industry-ready skills.</p>
+
+          <h3>Data Science Intern — University of San Diego</h3>
+          <p>June 2023 – Sept 2023</p>
+          <p>Built LSTM and XGBoost ensemble models for stock-price forecasting with 12% accuracy lift over baselines and conducted statistical analysis in R. Engineered an ETL framework using Selenium, Spark, and NoSQL to process 10M+ financial records with automated validation. Automated market-index reporting via AWS Lambda, S3, CloudWatch, and Athena, cutting latency by 50%.</p>
+
+          <h3>Undergraduate Research Assistant — National Institute of Technology</h3>
+          <p>Sept 2021 – Feb 2022</p>
+          <p>Developed an NLP question-answering system for multiple-choice reasoning, building a preprocessing pipeline with coreference resolution and relation extraction to construct knowledge graphs. Generated embeddings using RoBERTa and EmbedKGQA with a novel answer selection module, achieving 78% accuracy. Published research in Springer Journal.</p>
+
+          <h3>Undergraduate Research Assistant — National Institute of Technology</h3>
+          <p>April 2021 – Sept 2021</p>
+          <p>Built an end-to-end computer vision pipeline for pneumonia detection with object masking, superpixel segmentation, and cross-channel colorization, improving accuracy by 21%. Enhanced Vision Transformer and YOLO with MHSA, BiFPN, and lead-guided label assigner in an ensemble architecture with TTA, boosting mAP@0.5 from 0.35 to 0.70. Published research in IEEE.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© <span id="year4"></span> Your Name</p>
+  </footer>
+
+  <script>document.getElementById('year4').textContent = new Date().getFullYear();</script>
+</body>
+</html>

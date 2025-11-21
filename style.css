@@ -1,0 +1,211 @@
+/* style.css — Apple-like minimalist theme */
+
+/* System font stack (San Francisco on Apple devices) */
+:root{
+  --max-width: 980px;
+  --accent: #0070f3;
+  --muted: #6b6b6b;
+}
+
+/* base reset */
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #111111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.5;
+}
+
+/* central container */
+.container{
+  width: min(92%, var(--max-width));
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* Nav / glass effect */
+.nav-wrap{
+  position: sticky;
+  top: 12px;
+  z-index: 40;
+  display: block;
+  margin-bottom: 18px;
+  pointer-events: auto;
+}
+
+.glass-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.6);
+  /* blur backdrop for glassmorphism */
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  backdrop-filter: blur(8px) saturate(120%);
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo{
+  font-weight:600;
+  font-size: 16px;
+  color: #111;
+  text-decoration:none;
+  letter-spacing: -0.2px;
+}
+
+/* Nav links */
+.nav-links{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  gap: 18px;
+  align-items:center;
+}
+.nav-links a{
+  text-decoration:none;
+  color: #111;
+  font-size:15px;
+  padding:6px 8px;
+  border-radius:8px;
+}
+.nav-links a:hover,
+.nav-links a[aria-current="page"]{
+  background: rgba(0,0,0,0.04);
+}
+
+/* Main content & hero */
+.main-content{
+  padding-top: 36px;
+  padding-bottom: 48px;
+}
+
+/* Hero style */
+.hero{
+  text-align:center;
+  padding: 56px 8px 36px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 18px;
+}
+
+.hero .name {
+  animation: keynoteFadeUp 0.9s ease-out 0.15s both;
+}
+
+.hero .subtitle {
+  animation: keynoteFadeUp 1s ease-out 0.32s both;
+}
+
+.portrait-wrap {
+  animation: keynoteFadeUp 0.9s ease-out 0s both;
+  width: 70%;
+  height: 70%;
+  display:inline-block;
+  border-radius: 22px; /* rounded-square feel */
+  overflow:hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,245,245,0.8));
+}
+
+.portrait-wrap-profile {
+  animation: keynoteFadeUp 0.9s ease-out 0s both;
+  width: 180px;
+  height: 180px;
+  display:inline-block;
+  border-radius: 22px; /* rounded-square feel */
+  overflow:hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,245,245,0.8));
+}
+
+.portrait{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* Name & subtitle */
+.name{
+  margin:0;
+  font-size:40px;
+  font-weight:600;
+  letter-spacing:-0.6px;
+  line-height:1;
+}
+.subtitle{
+  margin:0;
+  color:var(--muted);
+  font-size:16px;
+  max-width:680px;
+}
+
+/* Sections */
+section.intro, section.spotlight, .page{
+  margin-top:36px;
+  margin-bottom:36px;
+}
+
+h2,h3,h4{ margin: 14px 0 8px; font-weight:600; color:#111; }
+p{ margin: 0 0 14px; color:#222; }
+
+.card{
+  padding:14px;
+  border-radius:12px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+}
+
+/* Footer */
+.footer{
+  padding: 28px 0;
+  color: #6b6b6b;
+  text-align:center;
+  font-size:14px;
+  border-top: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Keynote like fade */
+@keyframes keynoteFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* small screens */
+@media (max-width:720px){
+  .glass-nav{
+    padding: 8px 12px;
+  }
+  .nav-links{ gap: 10px; font-size:14px; }
+  .portrait-wrap{ width: 140px; height:140px; border-radius:20px; }
+  .name{ font-size:28px; }
+  .subtitle{ font-size:14px; max-width:420px; }
+  .container{ width:94%; }
+}
+
+/* utility */
+.simple-list { padding-left: 18px; }
+.cta { color: var(--accent); text-decoration:none; font-weight:600; }
+.cta:hover { text-decoration: underline; }
+
+

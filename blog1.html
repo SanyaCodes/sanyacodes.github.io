@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blog1 — Sanya Chetwani</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="glass-nav container">
+      <a class="logo" href="index.html">Sanya Chetwani</a>
+      <ul class="nav-links">
+        <li><a href="index.html">About</a></li>
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="experience.html">Experience</a></li>
+        <!-- <li><a href="contact.html">Contact</a></li> -->
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h1>Three Ways to Integrate Foundation Models into Production: Lessons from Netflix</h1>
+      <div class="timeline">
+        <div class="role">
+          <p>When Netflix built their Foundation Model for personalization, they solved one problem but created another: how do you actually integrate a massive transformer model into existing production systems without breaking everything?</p>
+
+          <p>Most ML research focuses on training and inference. But there's surprisingly little practical guidance on the messy middle part - taking a powerful foundation model and plugging it into real applications with real latency requirements, real tech stack constraints, and real users expecting their recommendations instantly.</p>
+
+          <p>Netflix experimented with three distinct integration approaches, each now powering different parts of their recommendation system. Here's what they learned.</p>
+
+          <h2>The Problem: Too Many Specialized Models</h2>
+
+          <p>Netflix's homepage runs on several specialized models. Each one needs maintenance, feature engineering, and continuous innovation. The Foundation Model centralizes member preference learning - one powerful model trained on comprehensive user interaction histories that distributes its learnings to other models.</p>
+
+          <p>But having a great model doesn't mean much if you can't actually use it in production.</p>
+
+          <h2>Approach 1: Embeddings via Feature Store</h2>
+
+          <h3>How it works</h3>
+          <p>Extract user profile embeddings (hidden state of last user event) and item embeddings (weights from item tower). Store them in an Embedding Store and let downstream models consume them as features.</p>
+
+          <h3>The infrastructure</h3>
+          <p>Netflix retrains the Foundation Model from scratch monthly, then fine-tunes it daily on latest data. Daily fine-tuning expands the entity space for newly launched titles. After fine-tuning, batch inference refreshes all embeddings and publishes to the Embedding Store.</p>
+
+          <h3>The challenge</h3>
+          <p>Embedding spaces drift between runs due to random initialization and daily fine-tuning. Solution? Embedding stabilization techniques that map embeddings into the same space daily, so downstream models don't break.</p>
+
+          <h3>Pros</h3>
+          <ul>
+              <li>Low barrier to entry</li>
+              <li>Relatively low training and inference costs</li>
+              <li>Easy to integrate into existing pipelines</li>
+              <li>Good for candidate generation and title recommendations</li>
+          </ul>
+
+          <h3>Cons</h3>
+          <ul>
+              <li>Staleness. Time gap between embedding computation and inference hurts freshness</li>
+              <li>Doesn't unlock full power of the Foundation Model</li>
+              <li>Limited real-time adaptability</li>
+          </ul>
+
+          <h3>Netflix's take</h3>
+          <p>This is the default starting point. While embeddings don't leverage the full model, they're low cost and high leverage. Netflix invested in near-real-time embedding generation to update embeddings based on in-session user actions, making recommendations more adaptive.</p>
+
+          <h2>Approach 2: Foundation Model as Subgraph</h2>
+
+          <h3>How it works</h3>
+          <p>Use the Foundation Model decoder stack as an input subgraph to your downstream model. The subgraph processes raw user interaction sequences and outputs representations fed into the application model graph.</p>
+
+          <h3>The key advantage</h3>
+          <p>No staleness. No time gap between Foundation Model inference and application inference. Applications can fine-tune the subgraph during their own training, potentially getting better performance than static embeddings. You can also leverage specific layers not exposed through the Embedding Store.</p>
+
+          <h3>The complexity tax</h3>
+          <ul>
+              <li>Application models must generate all features needed for the subgraph</li>
+              <li>Increases application model size and inference time</li>
+              <li>More complex training code</li>
+              <li>Higher compute costs</li>
+          </ul>
+
+          <h3>Netflix's optimization</h3>
+          <p>Split the subgraph so it runs once per profile per request and is shared across all items in that request.</p>
+
+          <h3>When to use it</h3>
+          <p>Reserve this for high-impact use cases where metric improvements justify the cost and complexity. The Foundation Model team provides reusable code and jobs to make feature generation more efficient.</p>
+
+          <h2>Approach 3: Fine-tune and Use Directly</h2>
+
+          <h3>How it works</h3>
+          <p>Like fine-tuning LLMs with domain-specific data. The Foundation Model trains on next-token prediction with tokens being user interactions. Fine-tune it on product-specific data, then use the fine-tuned model directly.</p>
+
+          <h3>Example</h3>
+          <p>For "Trending Now" row, recent interactions on trending titles matter more than old interactions. Fine-tune specifically for that signal.</p>
+
+          <h3>Flexibility</h3>
+          <p>Teams can do full parameter fine-tuning or freeze layers. They can add different output heads with different objectives. Netflix built a fine-tuning framework to make this easy.</p>
+
+          <h3>Pros</h3>
+          <ul>
+              <li>Optimized for specific use cases</li>
+              <li>De facto baseline for new models/applications</li>
+              <li>Skip months of feature engineering - just fine-tune and go</li>
+          </ul>
+
+          <h3>Cons</h3>
+          <ul>
+              <li>More models and pipelines to maintain</li>
+              <li>Must carefully optimize latency and SLAs per application</li>
+          </ul>
+
+          <h2>What This Means for ML Engineering</h2>
+
+          <p>Netflix's experience highlights something we don't talk about enough: <strong>integration is just as hard as training</strong>. Maybe harder.</p>
+
+          <p>The "right" approach depends on your constraints:</p>
+          <ul>
+              <li>Need low latency and can tolerate some staleness? <strong>Embeddings</strong>.</li>
+              <li>Need freshness and willing to pay the compute cost? <strong>Subgraph</strong>.</li>
+              <li>Building a new application or need domain-specific optimization? <strong>Fine-tuning</strong>.</li>
+          </ul>
+
+          <p>The infrastructure matters too. Netflix's success depends on:</p>
+          <ul>
+              <li>Robust Embedding Store with versioning and timestamping</li>
+              <li>Near-real-time embedding generation framework</li>
+              <li>Reusable feature generation code</li>
+              <li>Fine-tuning framework with standardized APIs</li>
+              <li>Platform support for all three patterns</li>
+          </ul>
+
+          <h2>The Bigger Lesson</h2>
+
+          <p>Foundation models are powerful, but their value is locked until you solve the integration problem. Netflix didn't just build one solution - they built three, each optimized for different use cases.</p>
+
+          <p>As more companies build foundation models, we need more research and tooling around production integration patterns. The model is just the beginning. The real engineering challenge is making it work in the messy reality of production systems with legacy tech stacks, latency budgets, and users who won't wait.</p>
+
+          <p>Netflix continues iterating on these approaches - distilling smaller versions to reduce subgraph latency, improving near-real-time embedding inference, refining APIs. Integration isn't a one-time problem you solve. It's an ongoing engineering challenge that evolves with your systems and needs.</p>
+
+          <p>If you're building or integrating foundation models, don't underestimate this part. Start simple with embeddings, measure impact, then decide if the complexity of deeper integration is worth it. And invest in the infrastructure - the Embedding Store, the fine-tuning framework, the standardized APIs. Those unsexy platform pieces are what make foundation models actually useful in production.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>© <span id="year4"></span> Your Name</p>
+  </footer>
+
+  <script>document.getElementById('year4').textContent = new Date().getFullYear();</script>
+</body>
+</html>
