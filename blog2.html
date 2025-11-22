@@ -6,7 +6,7 @@
   <title>Blog2 — Sanya Chetwani</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="home-page blog-page">
   <header class="nav-wrap">
     <nav class="glass-nav container">
       <a class="logo" href="index.html">Sanya Chetwani</a>
@@ -16,14 +16,19 @@
         <li><a href="experience.html">Experience</a></li>
         <!-- <li><a href="contact.html">Contact</a></li> -->
       </ul>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">☾</button>
     </nav>
   </header>
 
   <main class="container">
     <section class="page">
-      <h1>Building a Real-Time Feature Store: Lessons from Processing 100K+ Events Daily</h1>
-      <div class="timeline">
-        <div class="role">
+      <a class="timeline-card timeline-card-link back-link" href="blog.html" aria-label="Back to blog list">
+        ← Back to Blogs
+      </a>
+      <div class="blog-detail">
+        <h1>Building a Real-Time Feature Store: Lessons from Processing 100K+ Events Daily</h1>
+
+        <div class="role blog-body">
           <p>When we started building our ML platform at Kognitic, we had a problem that every ML team eventually faces: our models were making predictions with stale data. A clinical trial published at 9 AM wouldn't show up in our predictions until the next day's batch run. For pharma clients racing to market, that 24-hour lag was unacceptable.</p>
     
           <p>So we built a real-time feature store. Not because it was trendy, but because we needed it. Here's what actually worked, what broke spectacularly, and what I'd do differently.</p>
@@ -201,13 +206,44 @@
     
         </div>
       </div>
+
     </section>
   </main>
+  <button class="back-to-top" aria-label="Scroll back to top">↑</button>
 
   <footer class="container footer">
-    <p>© <span id="year4"></span> Your Name</p>
+    <p>© Sanya Chetwani</p>
   </footer>
+  <script>
+    (function() {
+      const backToTopBtn = document.querySelector('.back-to-top');
+      const toggleBackToTop = () => {
+        if (!backToTopBtn) return;
+        backToTopBtn.classList.toggle('show', window.scrollY > 200);
+      };
+      window.addEventListener('scroll', toggleBackToTop);
+      backToTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      toggleBackToTop();
 
-  <script>document.getElementById('year4').textContent = new Date().getFullYear();</script>
+      const storageKey = 'theme-preference';
+      const toggleBtn = document.querySelector('.theme-toggle');
+      const applyTheme = (theme) => {
+        const isDark = theme === 'dark';
+        document.body.classList.toggle('theme-dark', isDark);
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-pressed', String(isDark));
+          toggleBtn.textContent = isDark ? '☀' : '☾';
+        }
+      };
+      const storedTheme = localStorage.getItem(storageKey);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      toggleBtn?.addEventListener('click', () => {
+        const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(storageKey, newTheme);
+      });
+    })();
+  </script>
 </body>
 </html>
