@@ -147,11 +147,11 @@
         document.body.classList.toggle('theme-dark', isDark);
         if (toggleBtn) {
           toggleBtn.setAttribute('aria-pressed', String(isDark));
-          toggleBtn.textContent = isDark ? '☀' : '☾';
+          toggleBtn.textContent = isDark ? '☀': '☾';
         }
       };
       const storedTheme = localStorage.getItem(storageKey);
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: light)').matches;
       applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
       toggleBtn?.addEventListener('click', () => {
         const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
