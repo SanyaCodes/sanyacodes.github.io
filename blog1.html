@@ -6,7 +6,7 @@
   <title>Blog1 — Sanya Chetwani</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="home-page blog-page">
   <header class="nav-wrap">
     <nav class="glass-nav container">
       <a class="logo" href="index.html">Sanya Chetwani</a>
@@ -16,14 +16,18 @@
         <li><a href="experience.html">Experience</a></li>
         <!-- <li><a href="contact.html">Contact</a></li> -->
       </ul>
+      <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">☾</button>
     </nav>
   </header>
 
   <main class="container">
     <section class="page">
-      <h1>Three Ways to Integrate Foundation Models into Production: Lessons from Netflix</h1>
-      <div class="timeline">
-        <div class="role">
+      <a class="timeline-card timeline-card-link back-link" href="blog.html" aria-label="Back to blog list">
+        ← Back to Blogs
+      </a>
+      <div class="blog-detail">
+        <h1>Three Ways to Integrate Foundation Models into Production: Lessons from Netflix</h1>
+        <div class="role blog-body">
           <p>When Netflix built their Foundation Model for personalization, they solved one problem but created another: how do you actually integrate a massive transformer model into existing production systems without breaking everything?</p>
 
           <p>Most ML research focuses on training and inference. But there's surprisingly little practical guidance on the messy middle part - taking a powerful foundation model and plugging it into real applications with real latency requirements, real tech stack constraints, and real users expecting their recommendations instantly.</p>
@@ -142,13 +146,44 @@
           <p>If you're building or integrating foundation models, don't underestimate this part. Start simple with embeddings, measure impact, then decide if the complexity of deeper integration is worth it. And invest in the infrastructure - the Embedding Store, the fine-tuning framework, the standardized APIs. Those unsexy platform pieces are what make foundation models actually useful in production.</p>
         </div>
       </div>
+
     </section>
   </main>
+  <button class="back-to-top" aria-label="Scroll back to top">↑</button>
 
   <footer class="container footer">
-    <p>© <span id="year4"></span> Your Name</p>
+    <p>© Sanya Chetwani</p>
   </footer>
+  <script>
+    (function() {
+      const backToTopBtn = document.querySelector('.back-to-top');
+      const toggleBackToTop = () => {
+        if (!backToTopBtn) return;
+        backToTopBtn.classList.toggle('show', window.scrollY > 200);
+      };
+      window.addEventListener('scroll', toggleBackToTop);
+      backToTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      toggleBackToTop();
 
-  <script>document.getElementById('year4').textContent = new Date().getFullYear();</script>
+      const storageKey = 'theme-preference';
+      const toggleBtn = document.querySelector('.theme-toggle');
+      const applyTheme = (theme) => {
+        const isDark = theme === 'dark';
+        document.body.classList.toggle('theme-dark', isDark);
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-pressed', String(isDark));
+          toggleBtn.textContent = isDark ? '☀' : '☾';
+        }
+      };
+      const storedTheme = localStorage.getItem(storageKey);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      toggleBtn?.addEventListener('click', () => {
+        const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem(storageKey, newTheme);
+      });
+    })();
+  </script>
 </body>
 </html>
