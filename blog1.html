@@ -177,7 +177,7 @@
       };
       const storedTheme = localStorage.getItem(storageKey);
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
+      applyTheme(storedTheme || 'light');
       toggleBtn?.addEventListener('click', () => {
         const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
         applyTheme(newTheme);
